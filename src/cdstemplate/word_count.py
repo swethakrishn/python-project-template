@@ -110,7 +110,7 @@ class CorpusCounter:
         logger.info("Saving token counts to %s", csv_file)
         self.get_token_counts_as_dataframe().to_csv(csv_file, index=False, header=True)
 
-    def create_wordcloud(self,save_path=None):
+    def create_wordcloud(self, save_path=None):
         """Generates a word cloud from the token counts in the corpus. Displays the wordcloud.
         Also saves it to a file if save_path is provided.
         "param_save_path: Path to save the word cloud image, if None, it will not save the image.
@@ -119,20 +119,17 @@ class CorpusCounter:
         dataframe = self.get_token_counts_as_dataframe()
 
         ## remove stopwords and punctuation
-        dataframe = dataframe[~dataframe['token'].str.contains(r'^\W+$')]
-        dataframe['token'] = dataframe['token'].str.lower()
-        dataframe = dataframe[~dataframe['token'].isin(STOPWORDS)]
+        dataframe = dataframe[~dataframe["token"].str.contains(r"^\W+$")]
+        dataframe["token"] = dataframe["token"].str.lower()
+        dataframe = dataframe[~dataframe["token"].isin(STOPWORDS)]
 
-        wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(
-            dict(zip(dataframe['token'], dataframe['count']))
+        wordcloud = WordCloud(width=800, height=400, background_color="white").generate_from_frequencies(
+            dict(zip(dataframe["token"], dataframe["count"]))
         )
         if save_path:
-            wordcloud.to_file(save_path / "wordcloud.png" )
+            wordcloud.to_file(save_path / "wordcloud.png")
             logger.info("Word cloud saved to %s", save_path)
         else:
             logger.info("Word cloud not saved, no path provided.")
 
         wordcloud.to_image().show()
-        
-
-
