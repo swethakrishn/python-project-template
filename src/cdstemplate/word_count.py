@@ -5,8 +5,6 @@ This module provides operations for tokenization and tracking cumulative word co
 from collections import Counter
 import logging
 import re
-from wordcloud import WordCloud
-from wordcloud import STOPWORDS
 
 import pandas as pd
 
@@ -133,3 +131,4 @@ class CorpusCounter:
             logger.info("Word cloud not saved, no path provided.")
 
         wordcloud.to_image().show()
+
